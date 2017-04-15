@@ -1,4 +1,7 @@
-#define secIncreased 0x00
+#define SEC_INCR_bit 0
+#define SEC_INCR 1
+#define UPDT_RATE 1
+
 #define PRTWI0 7
 #define PRTIM2 6
 #define PRTIM0 5
