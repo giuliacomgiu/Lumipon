@@ -6,7 +6,6 @@ byte minPassed = 0;
 
 void setup() {
     Serial.begin(9600);
-    
     pinMode(LED_BUILTIN, OUTPUT);
     noInterrupts();
     //Configurando Watchdog. Para zerar, usar &. Para setar, usar |
@@ -23,15 +22,17 @@ void loop() {
     
     PowerDown();
     switch(FSM_wake){
-        case secIncreased:
+        case SEC_INCR:
             /*
              * Call utc to time func
              * If 5 min passed, update data
              * Else, do nothing. For now
             */
             utcToTime(&localTime);
-            if(localTime.minu - minPassed == 5){
+            FSM_wake &= ~(1 << SEC_INCR_bit);
+            if(localTime.minu - minPassed >= UPDT_RATE){
                 //Get data
+                Serial.print(UPDT_RATE); Serial.println(" minute(s) passed.");
                 minPassed = localTime.minu;
                 }
         break;
