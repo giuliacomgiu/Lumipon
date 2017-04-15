@@ -3,14 +3,15 @@
 #define HIDRO_H
 #include <iostream>
 #include <string>
-/*struct Planta{
-	string planta_name;
+using namespace std;
+struct Planta{
+	string name;
 	int tempo_ideal;
-} ;//exemplos de nome so */
+} alface,aipim,cereja;
 class Contexto{
 	int valorPorta,lampada;
 	float tensao;
-	string planta;
+	Planta planta;
 	public:
 	Contexto();//construtor default
 	void medePorta(int); //duvida getPorta ou efetuar
@@ -26,43 +27,43 @@ class Contexto{
 class Controle : public Contexto{
 	//talves controle so instanciei contexto
 	public:
-	int calculaTudo(); //Não sei ao exato como sera essa rotina
+	bool calculaTudo(); //Não sei ao exato como sera essa rotina
 	//No entanto a intenção é chamar ela pra definir o tempo ideal
 	//Ou não para a planta sendo então o codigo base da parte
 	//do hardware
 } control;
-void Contexto::Contexto{
-	Contexto::valorPorta = 0;
-	Contexto::tensao = 0;
-	Contexto::lampada = 0;
-	Contexto::planta = NULL;
-}
+ Contexto::Contexto(){
+	valorPorta = 0;
+	tensao = 0;
+	lampada = 0;
+	//planta = NULL;
+};
 void Contexto::medePorta(int){
 	//A implementar
-}
+};
 void Contexto::converteTensao(int){
 	//A implementar
-}
+};
 void Contexto::nomePlanta(string recebido){
-//	 my_planta (recebido);
+	 //my_planta (recebido);
 	//planta = my_planta;
-}
+};
 void Contexto::setLampada(int numlamp){
 	lampada = numlamp;
-}
+};
 float Contexto::IndicaTensao(){
 	return(tensao);
-}
+};
 int Contexto::getLampada(){
 	return(lampada);
-}
+};
 string Contexto::getPlanta(){
-	return(planta.nome)
-}
+	return(planta.name);
+};
 
-int Controle::calculaTudo(){
-	
-}
+bool Controle::calculaTudo(){
+	return(true);//returna true se liga lampada ou false se nao liga
+};
 
 
 
