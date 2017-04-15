@@ -12,17 +12,14 @@ Contexto::Contexto(){
 void Contexto::medePorta(int){
 	//A implementar
 };
-void Contexto::converteTensao(int){
-	//A implementar
-};
-void Contexto::nomePlanta(string recebido){
+void Contexto::setPlanta(string recebido){
 	 //my_planta (recebido);
 	//planta = my_planta;
 };
 void Contexto::setLampada(int numlamp){
 	lampada = numlamp;
 };
-float Contexto::IndicaTensao(){
+float Contexto::getTensaoLDR(){
 	return(tensao);
 };
 int Contexto::getLampada(){
