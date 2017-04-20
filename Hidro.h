@@ -4,29 +4,34 @@
 #include <iostream>
 #include <string>
 using namespace std;
-struct Planta{
+
+typedef struct{
 	string name;
 	int tempo_ideal;
-} alface,aipim,cereja;
+} Planta;
+
 class Contexto{
+private:
 	int valorPorta,lampada;
 	float tensao;
 	Planta planta;
-	public:
+public:
 	Contexto();//construtor default
-	void medePorta(int); //duvida getPorta ou efetuar
-	//de fato a medição da porta atraves desse metodo.
-	void converteTensao(int);//n tenho ctz se sera necessario
-	void nomePlanta(string);
+	void medePorta(int);	//duvida getPorta ou efetuar
+				//de fato a medição da porta atraves desse metodo.
+	void setPlanta(string);
 	void setLampada(int);
-	float IndicaTensao();//pode so guardar o valornaporta e fazer
-	//o calc aqui quando for pedido
+	
+	float getTensãoLDR();	//pode so guardar o valornaporta e fazer
+				//o calc aqui quando for pedido
 	int getLampada();
-	string getPlanta(); //retorna so o nome da strcut da planta
+	string getPlanta();	//retorna so o nome da strcut da planta
 } ctx;
+
 class Controle : public Contexto{
+private:
 	//talves controle so instanciei contexto
-	public:
+public:
 	bool calculaTudo(); //Não sei ao exato como sera essa rotina
 	//No entanto a intenção é chamar ela pra definir o tempo ideal
 	//Ou não para a planta sendo então o codigo base da parte
