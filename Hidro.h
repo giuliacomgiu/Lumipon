@@ -5,19 +5,19 @@
 #include <string>
 using namespace std;
 
-Class Planta{
+class Planta{
 private:
 	string name;
 	int tempo_ideal;
 }
 
-Class Lampada{
+class Lampada{
 private:
 	int codigo;
 	int isAceso;
 }
 
-Class Contexto{
+class Contexto{
 private:
 	
 	Planta planta;
