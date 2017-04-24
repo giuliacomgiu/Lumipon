@@ -13,20 +13,22 @@ void Contexto::medePorta(int){
 	//A implementar
 };
 void Contexto::setPlanta(string recebido){
-	 //my_planta (recebido);
-	//planta = my_planta;
+	namePlant = recebido;
 };
-void Contexto::setLampada(int numlamp){
-	lampada = numlamp;
-};
-float Contexto::getTensaoLDR(){
-	return(tensao);
+void Contexto::setLampada(int recebido){
+	codigoLamp = recebido;
 };
 int Contexto::getLampada(){
-	return(lampada);
+	return(codigoLamp);
 };
 string Contexto::getPlanta(){
-	return(planta.name);
+	return(namePlant);
+};
+bool Contexto::getLampStats(){
+	return(isAceso);
+};
+float Controle::getTensaoLDR(){
+	return(tensaoLDR);
 };
 
 bool Controle::calculaTudo(){
