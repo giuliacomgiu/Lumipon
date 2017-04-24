@@ -6,21 +6,18 @@
 using namespace std;
 
 class Planta{
-private:
-	string name;
+protected:
+	string namePlant;
 	int tempo_ideal;
 }
 
 class Lampada{
-private:
-	int codigo;
-	int isAceso;
+protected:
+	int codigoLamp;
+	bool isAceso;
 }
 
-class Contexto{
-private:
-	
-	Planta planta;
+class Contexto: public Lampada, public Planta{
 public:
 	Contexto();//construtor default
 	void setPlanta(string);
@@ -28,6 +25,7 @@ public:
 	
 	void medePorta(int);	//a lampada ta acesa?
 	int getLampada();	//numero da lampada
+	bool getLampStats();
 	string getPlanta();	//retorna so o nome da strcut da planta
 }
 
