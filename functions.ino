@@ -1,12 +1,17 @@
 /*
- * Functions: ISR, PowerDown, utcToSeg
+ * Functions: ISR, LDRVoltageUpdt, PowerDown, utcToSeg
 */
 
 ISR(WDT_vect){
-    utc++;
-    FSM_wake |= (1 << SEC_INCR_bit); 
-    digitalWrite(LED_BUILTIN, !digitalRead(LED_BUILTIN));
+    FSM_wake |= (1 << SEC_INCR_bit);
   }
+
+/*
+ * Update LDR input voltage
+ */
+void LDRVoltageUpdt(float* LDRVoltage){
+	*LDRVoltage = 5.0*analogRead(LDRPin)/1023.0;
+}
 
 /*
  * Enable pullup on unused pins
@@ -33,14 +38,13 @@ void PowerDown(){
     __asm__ __volatile__ ( "sleep" "\n\t" :: );
     SMCR &= ~(1 << SE);
     Serial.begin(9600);
-    Serial.print("\nWaking up...\t");
-    Serial.println(FSM_wake);
+    Serial.println("\nWaking up...");
     }
 
     //(*localTime).ano é igual a localTime->ano
 //31557600=365.25 dias no ano.  31536000=365*24*3600.    31622400=366*24*3600
 
-void utcToTime(tm *localTime){
+void utcToTime(tm *localTime, unsigned long* utc){
 
     unsigned long segUtc;
     unsigned long anoTemp; 
@@ -61,7 +65,7 @@ void utcToTime(tm *localTime){
     //Vendo se o ano é bissexto e dividindo pelo tempo certo.
     //Se a divisão do ano por 4 n for 0, ano não é bissexto
     //Bit 15 é 0 se ano n for bissexto, 1 se ano for bissexto
-    anoNoOffset = (utc / 31557600);
+    anoNoOffset = (*utc / 31557600);
 
     for(anoTemp = 1970; anoTemp <= (anoNoOffset+1970); anoTemp++){
         if((anoTemp % 4) == 0){
@@ -71,15 +75,15 @@ void utcToTime(tm *localTime){
 
     if( ((anoNoOffset+1970) % 4) != 0){
 
-        anoNoOffset = (utc / 31536000);
-        segUtc = utc % 31536000;
+        anoNoOffset = (*utc / 31536000);
+        segUtc = *utc % 31536000;
         diaDoAno = (segUtc / 86400) - anoBissexto;
         diaDoAno &= ~(1<<15);
     
     } else {
 
-        anoNoOffset = (utc / 31622400);
-        segUtc = utc % 31622400;
+        anoNoOffset = (*utc / 31622400);
+        segUtc = *utc % 31622400;
         diaDoAno = (segUtc / 86400) - anoBissexto;
         diaDoAno |= (1<<15);
       
