@@ -1,10 +1,26 @@
 /*
- * Functions: ISR, LDRVoltageUpdt, PowerDown, utcToSeg
+ * Functions: ISR WDT, ISR extINT, LDRVoltageUpdt, PowerDown, utcToSeg
 */
+
+//ISR(INT0_vect){
+//    FSM_wake |= (1 << BUT_PRESS_bit);
+//    Serial.println("ext int!");
+//    }
 
 ISR(WDT_vect){
     FSM_wake |= (1 << SEC_INCR_bit);
   }
+
+bool acendeLampada(int* tempoPercorrido, int* tempoIdeal, float* LDRVoltage, float*ThrVoltage){
+	bool retorno;
+	
+	if((*tempoPercorrido < *tempoIdeal) && (*LDRVoltage < *ThrVoltage)){
+		retorno = true;
+	} else {
+		retorno = false;
+	}
+	return retorno;
+}
 
 /*
  * Update LDR input voltage
