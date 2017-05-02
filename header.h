@@ -2,12 +2,15 @@
 #define HEADER_H
 
 #define LDRPin A1
+#define EXTpin 2
 
 #define SEC_INCR_bit 0
+#define BUT_PRESS_bit 1
 #define UPDT_DATA_bit 1
 #define UPDT_LDR_bit 2
 #define KEEP_LCD_bit 3
 
+#define BUT_PRESS B10
 #define SEC_INCR 1
 #define SEC_INCR_AND_UPDT_DATA B1
 #define SEC_INCR_AND_UPDT_LDR B10
@@ -59,28 +62,31 @@ protected:
 
 class Contexto: public Lampada, public Planta{
 private:
-    tm tempoPercorrido;
+//    tm tempoPercorrido;
 public:
 	Contexto();//construtor default
     void setTempoPlanta(int);
-    void setTempoPercorrido();
+//    void setTempoPercorrido();
 	void setPlanta(String);
 	void setLampada(int);
     void setLampStats(bool);
 
-    tm getTempoPercorrido();
+//    tm getTempoPercorrido();
     int getTempoPlanta();
 	int getLampada();	//numero da lampada
 	bool getLampStats();
 	String getPlanta();	//retorna so o nome da strcut da planta
-} l1, l2, l3;
+} contexto[2];
 
 class Controle : public Contexto{
 private:
 	float tensaoLDR;
+	float tensaoThreshold;
 public:
+	bool jaTeveLuz;
+
+	void setTensaoThreshold(byte porcentagem);
 	float getTensaoLDR();
-	bool calculaTudo(); 
 };
     
 #endif
