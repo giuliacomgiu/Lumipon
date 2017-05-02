@@ -19,12 +19,12 @@ void Contexto::setLampStats(bool recebido){
 void Contexto::setTempoPlanta(int recebido){
     tempo_ideal = recebido;
 };
-void Contexto::setTempoPercorrido(){
-//    utcToTime(&tempoPercorrido);
-};
-tm Contexto::getTempoPercorrido(){
-    return(tempoPercorrido);
-};
+//void Contexto::setTempoPercorrido(int auxiliar){
+//    tempoPercorrido = auxiliar;
+//};
+//tm Contexto::getTempoPercorrido(){
+//    return(tempoPercorrido);
+//};
 int Contexto::getTempoPlanta(){
     return(tempo_ideal);
 };
@@ -36,12 +36,4 @@ String Contexto::getPlanta(){
 };
 bool Contexto::getLampStats(){
 	return(isAceso);
-};
-
-
-float Controle::getTensaoLDR(){
-	return(tensaoLDR);
-};
-bool Controle::calculaTudo(){
-	return(true);//returna true se liga lampada ou false se nao liga
 };
