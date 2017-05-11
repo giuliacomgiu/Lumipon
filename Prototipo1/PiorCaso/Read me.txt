@@ -1,0 +1,17 @@
+Este codigo está feito para a disciplina de projetos como teste.
+Não há comunicação WiFi. Atualização de dados não faz nada.
+
+O que este código emula:
+A tem autorização para acender caso
+  - o dia já tenha começado e não haja luz o suficiente
+  - seja mais do que 10h da manhã e não tenha amanhecido 
+    (dias chuvosos muito escuros, eclipse... medida de precaução)
+
+Após o tempo ideal da planta, desliga.
+
+Os dados do código são:
+  - LDR não faz nenhuma leitura. Testa apenas pior caso
+  - 10h da manhã ---> 00:00:03
+    Imprime na tela "Tempo contando"
+
+  - 1 planta cadastrada. Seu tempo ideal é de 3 minutos.
