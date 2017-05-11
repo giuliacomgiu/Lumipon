@@ -2,10 +2,10 @@
  * Functions: ISR WDT, ISR extINT, LDRVoltageUpdt, PowerDown, utcToSeg
 */
 
-//ISR(INT0_vect){
-//    FSM_wake |= (1 << BUT_PRESS_bit);
-//    Serial.println("ext int!");
-//    }
+ISR(INT0_vect){
+    FSM_wake |= (1 << BUT_PRESS_bit);
+    Serial.println("ext int!");
+    }
 
 ISR(WDT_vect){
     FSM_wake |= (1 << SEC_INCR_bit);
