@@ -11,20 +11,22 @@ void Contexto::setPlanta(String recebido){
 	namePlant = recebido;
 };
 void Contexto::setLampada(int recebido){
-	codigoLamp = recebido;
+    switch(recebido){
+        case 0:
+            codigoLamp = LAMP0pin;
+        break;
+        case 1:
+            codigoLamp = LAMP1pin;
+        break;
+    }
 };
 void Contexto::setLampStats(bool recebido){
     isAceso = recebido;
+    digitalWrite(codigoLamp,recebido);
 };
 void Contexto::setTempoPlanta(int recebido){
     tempo_ideal = recebido;
 };
-//void Contexto::setTempoPercorrido(int auxiliar){
-//    tempoPercorrido = auxiliar;
-//};
-//tm Contexto::getTempoPercorrido(){
-//    return(tempoPercorrido);
-//};
 int Contexto::getTempoPlanta(){
     return(tempo_ideal);
 };
