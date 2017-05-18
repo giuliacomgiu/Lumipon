@@ -76,7 +76,9 @@ void loop() {
                 Serial.println("Atualizacao de tudOOO!");
             }
 
-            if(localTime.hora == 0 && localTime.minu == 0 && localTime.seg == 3){podeContarTempo = false;}
+			//TO DEBUG:
+			//if(localTime.hora == 0 && localTime.minu == 0 && localTime.seg == 3){podeContarTempo = false;}
+            if(localTime.hora == 0){podeContarTempo = false;}
 
             switch(FSM_sec){
                 case SEC_INCR_AND_UPDT_DATA_AND_LDR:
