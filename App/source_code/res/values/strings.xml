@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Lumipon</string>
+    <string name="text1">Lampada1</string>
+    <string name="text2">Lampada2</string>
+    <string name="text3">Planta</string>
+    <string name="text4">Tempo ideal</string>
+    <string name="control1_file_key">com.example.lumipon.control1</string>
+    <string name="control2_file_key">com.example.lumipon.control2</string>
+    <string name="myfilename">com.example.lumipon.filename</string>
+</resources>
