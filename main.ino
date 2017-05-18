@@ -35,7 +35,7 @@ void loop() {
     static unsigned long utc = 1493769600;
     static byte FSM_sec = 0;
     static bool podeContarTempo = false;
-    float LDRVoltage;
+    float LDRVoltage = 0;
     float ThrVoltage = 2.0;
     static byte timeCountData;
     static byte timeCountLDR;
@@ -107,8 +107,9 @@ void loop() {
                 case SEC_INCR_AND_UPDT_LDR:
                     Serial.println("FSM att ldr");
                     FSM_sec &= ~(1 << UPDT_LDR_bit);
-                    LDRVoltageUpdt(&LDRVoltage);
+                    LDRVoltage = analogRead(A0)*(5.0/1023.0);
 
+                    Serial.println(LDRVoltage);
 
                     //Updates lightbulb status
                     if(podeContarTempo == true){
@@ -128,7 +129,7 @@ void loop() {
 
             //Updates daily initial time
             //UNCOMENT
-            if (podeContarTempo == false && (LDRVoltage > ThrVoltage || localTime.hora > 10) ){
+            if (podeContarTempo == false && (LDRVoltage <= ThrVoltage || localTime.hora >= 10) ){
                 podeContarTempo = true;
                 utcToTime(&horarioInicial, &utc);
                 Serial.println("Tempo contando!\t");

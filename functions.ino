@@ -14,7 +14,7 @@ ISR(WDT_vect){
 bool acendeLampada(int* tempoPercorrido, int* tempoIdeal, float* LDRVoltage, float*ThrVoltage){
 	bool retorno;
 	
-	if((*tempoPercorrido < *tempoIdeal) && (*LDRVoltage < *ThrVoltage)){
+	if((*tempoPercorrido <= *tempoIdeal) && (*LDRVoltage > *ThrVoltage)){
 		retorno = true;
 	} else {
 		retorno = false;
@@ -22,12 +22,6 @@ bool acendeLampada(int* tempoPercorrido, int* tempoIdeal, float* LDRVoltage, flo
 	return retorno;
 }
 
-/*
- * Update LDR input voltage
- */
-void LDRVoltageUpdt(float* LDRVoltage){
-	*LDRVoltage = 5.0*analogRead(LDRPin)/1023.0;
-}
 
 /*
  * Enable pullup on unused pins
@@ -53,6 +47,10 @@ void PowerDown(){
     SMCR |= 1 << SE;
     __asm__ __volatile__ ( "sleep" "\n\t" :: );
     SMCR &= ~(1 << SE);
+    noInterrupts();
+    PRR &= ~0x01;
+    Interrupts();
+    
     Serial.begin(9600);
     Serial.println("\nWaking up...");
     }

@@ -1,7 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#define LDRPin 8
+#define LDRPin A0
 #define EXTpin 2
 #define LAMP0pin 5
 #define LAMP1pin 6
@@ -81,15 +81,5 @@ public:
 	String getPlanta();	//retorna so o nome da strcut da planta
 } contexto[2];
 
-class Controle : public Contexto{
-private:
-	float tensaoLDR;
-	float tensaoThreshold;
-public:
-	bool jaTeveLuz;
-
-	void setTensaoThreshold(byte porcentagem);
-	float getTensaoLDR();
-};
     
 #endif
