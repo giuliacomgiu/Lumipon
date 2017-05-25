@@ -53,6 +53,9 @@ void PowerDown(){
     SMCR |= 1 << SE;
     __asm__ __volatile__ ( "sleep" "\n\t" :: );
     SMCR &= ~(1 << SE);
+    noInterrupts();
+    PRR &= ~0x01;
+    interrupts();
     Serial.begin(9600);
     Serial.println("\nWaking up...");
     }
