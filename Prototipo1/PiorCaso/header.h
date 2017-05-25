@@ -1,7 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#define LDRPin 8
+#define LDRPin A6
 #define EXTpin 2
 #define LAMP0pin 5
 #define LAMP1pin 6
