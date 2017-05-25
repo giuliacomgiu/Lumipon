@@ -1,7 +1,7 @@
 #ifndef HEADER_H
 #define HEADER_H
 
-#define LDRPin A1
+#define LDRPin A6
 #define EXTpin 2
 #define LAMP0pin 5
 #define LAMP1pin 6
@@ -75,21 +75,10 @@ public:
     void setLampStats(bool);
 
 //    tm getTempoPercorrido();
-    int getTempoPlanta();
+    	int getTempoPlanta();
 	int getLampada();	//numero da lampada
 	bool getLampStats();
 	String getPlanta();	//retorna so o nome da strcut da planta
 } contexto[2];
-
-class Controle : public Contexto{
-private:
-	float tensaoLDR;
-	float tensaoThreshold;
-public:
-	bool jaTeveLuz;
-
-	void setTensaoThreshold(byte porcentagem);
-	float getTensaoLDR();
-};
     
 #endif
