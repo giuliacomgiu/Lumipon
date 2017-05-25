@@ -2,10 +2,10 @@
  * Functions: ISR WDT, ISR extINT, LDRVoltageUpdt, PowerDown, utcToSeg
 */
 
-//ISR(INT0_vect){
-//    FSM_wake |= (1 << BUT_PRESS_bit);
-//    Serial.println("ext int!");
-//    }
+ISR(INT0_vect){
+    FSM_wake |= (1 << BUT_PRESS_bit);
+    Serial.println("ext int!");
+    }
 
 ISR(WDT_vect){
     FSM_wake |= (1 << SEC_INCR_bit);
@@ -14,7 +14,7 @@ ISR(WDT_vect){
 bool acendeLampada(int* tempoPercorrido, int* tempoIdeal, float* LDRVoltage, float*ThrVoltage){
 	bool retorno;
 	
-	if((*tempoPercorrido <= *tempoIdeal)/* && (*LDRVoltage < *ThrVoltage)*/){
+	if((*tempoPercorrido <= *tempoIdeal) && (*LDRVoltage > *ThrVoltage)){
 		retorno = true;
 	} else {
 		retorno = false;
@@ -128,8 +128,3 @@ void utcToTime(tm *localTime, unsigned long* utc){
     localTime->minu = minu;
     localTime->seg = segUtc;
 }
-
-
-//Suponho que o tempo foi att pelo usuário
-//Agora preciso atualizar o utc
-//Não tenho dia do ano, só dia do mês e mês
