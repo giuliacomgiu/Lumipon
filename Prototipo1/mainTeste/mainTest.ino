@@ -106,7 +106,7 @@ void loop() {
                 case SEC_INCR_AND_UPDT_LDR:
                     Serial.println("FSM att ldr");
                     FSM_sec &= ~(1 << UPDT_LDR_bit);
-                    LDRVoltage = analogRead(A0)*(5.0/1023.0);
+                    LDRVoltage = analogRead(LDRPin)*(5.0/1023.0);
 
                     Serial.println(LDRVoltage);
 
