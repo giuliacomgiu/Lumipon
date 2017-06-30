@@ -5,6 +5,7 @@
 #define EXTpin 2
 #define LAMP0pin 5
 #define LAMP1pin 6
+#define N_OF_LAMPS 2
 
 #define SEC_INCR_bit 0
 #define BUT_PRESS_bit 1

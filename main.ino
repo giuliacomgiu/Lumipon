@@ -76,8 +76,8 @@ void loop() {
                 Serial.println("Atualizacao de tudOOO!");
             }
 
-			//TO DEBUG:
-			//if(localTime.hora == 0 && localTime.minu == 0 && localTime.seg == 3){podeContarTempo = false;}
+      //TO DEBUG:
+      //if(localTime.hora == 0 && localTime.minu == 0 && localTime.seg == 3){podeContarTempo = false;}
             if(localTime.hora == 0){podeContarTempo = false;}
 
             switch(FSM_sec){
@@ -95,16 +95,21 @@ void loop() {
                  * Update data
                  */
                     FSM_sec &= ~(1 << UPDT_DATA_bit);
+                    bool lampStateAux[N_OF_LAMPS];
 
-                    //Updates lightbulb status
-                    if(podeContarTempo == true){
-                        for (int i = 0; i < 2; ++i)
-                        {
-                            int tempoPercorrido = (localTime.hora*60 + localTime.minu) - (horarioInicial.hora*60 + horarioInicial.minu); 
-                            int tempoIdeal = contexto[i].getTempoPlanta();
-                            contexto[i].setLampStats(acendeLampada(&tempoPercorrido, &tempoIdeal, &LDRVoltage, &ThrVoltage));
-                        }
+                    for (int i = 0; i < N_OF_LAMPS; ++i)
+                    {
+                      //Updates lightbulb status
+                      if(podeContarTempo == true){
+                          int tempoPercorrido = (localTime.hora*60 + localTime.minu) - (horarioInicial.hora*60 + horarioInicial.minu); 
+                          int tempoIdeal = contexto[i].getTempoPlanta();
+                          contexto[i].setLampStats(acendeLampada(&tempoPercorrido, &tempoIdeal, &LDRVoltage, &ThrVoltage));
+                      }
+
+                      lampStateAux[i] = contexto[i].getLampStats();
+                      updateData(lampStateAux);
                     }
+
                 break;
                 case SEC_INCR_AND_UPDT_LDR:
                     Serial.println("FSM att ldr");
@@ -115,7 +120,7 @@ void loop() {
 
                     //Updates lightbulb status
                     if(podeContarTempo == true){
-                        for (int i = 0; i < 2; ++i)
+                        for (int i = 0; i < N_OF_LAMPS; ++i)
                         {
                             int tempoPercorrido = (localTime.hora*60 + localTime.minu) - (horarioInicial.hora*60 + horarioInicial.minu); 
                             int tempoIdeal = contexto[i].getTempoPlanta();

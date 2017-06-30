@@ -48,8 +48,11 @@ void PowerDown(){
     __asm__ __volatile__ ( "sleep" "\n\t" :: );
     SMCR &= ~(1 << SE);
     noInterrupts();
+    /*
+     * Reinitialize USART
+     */
     PRR &= ~0x01;
-    Interrupts();
+    interrupts();
     
     Serial.begin(9600);
     Serial.println("\nWaking up...");
@@ -57,6 +60,92 @@ void PowerDown(){
 
     //(*localTime).ano é igual a localTime->ano
 //31557600=365.25 dias no ano.  31536000=365*24*3600.    31622400=366*24*3600
+
+void updateData(bool* lampState){
+    String inputBuffer;
+	String outputBuffer = "";
+	int i = 0;
+    int firstHeader = -1;
+    int lastHeader = -1;
+    int currentComma =  0;
+    int nextComma = -1;
+    String aux;
+
+	for(i = 0; i < 64; ++i){
+    	inputBuffer[i] = '\0';
+  	}
+
+  	for (i = 0; i < N_OF_LAMPS; ++i)
+  	{
+  		if (lampState[i])
+		{
+			outputBuffer += "ON" + ',';
+		} else
+		{
+			outputBuffer += "OFF" + ',';
+		}
+  	}
+  	outputBuffer[8] = '\0';
+	Serial.print(outputBuffer);
+	Serial.flush();
+	inputBuffer = Serial.readString();
+
+	//Handling data
+	firstHeader = inputBuffer.indexOf("HEADER");       //First and last instances of header
+    lastHeader = inputBuffer.lastIndexOf("HEADER");
+    nextComma = inputBuffer.indexOf(',');
+
+    while (nextComma < 64)
+    {
+        aux = inputBuffer.substring(currentComma+1,nextComma);
+        currentComma = nextComma;
+        nextComma = inputBuffer.indexOf(',', nextComma + 1);
+
+        if(aux == "LAMP1")
+        {
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            if(aux == "ON")
+            {
+                contexto[0].setLampStats(true);
+            } else if(aux == "OFF")
+            {
+                contexto[0].setLampStats(false);
+            }
+        } else if(aux == "LAMP2")
+        {
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            if(aux == "ON")
+            {
+                contexto[1].setLampStats(true);
+            } else if(aux == "OFF")
+            {
+                contexto[1].setLampStats(false);
+            }
+        } else if(aux == "CONTEXT1")
+        {
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            contexto[0].setPlanta(aux);
+
+            currentComma = nextComma;
+            nextComma = inputBuffer.indexOf(',', nextComma + 1);
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            contexto[0].setTempoPlanta(aux.toInt());
+        } else if(aux == "CONTEXT2")
+        {
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            contexto[1].setPlanta(aux);
+
+            currentComma = nextComma;
+            nextComma = inputBuffer.indexOf(',', nextComma + 1);
+            aux = inputBuffer.substring(currentComma+1,nextComma);
+            contexto[1].setTempoPlanta(aux.toInt());
+        }
+        
+    }
+
+
+	return;
+}
 
 void utcToTime(tm *localTime, unsigned long* utc){
 
