@@ -2,15 +2,11 @@
  * Functions: ISR WDT, ISR extINT, LDRVoltageUpdt, PowerDown, utcToSeg
 */
 
-ISR(INT0_vect){
-    FSM_wake |= (1 << BUT_PRESS_bit);
-    //Serial.println("ext int!");
-    }
-ISR(WDT_vect){
+/*ISR(WDT_vect){
     FSM_wake |= (1 << SEC_INCR_bit);
     Serial.print("Up!");
     Serial.flush();
-  }
+  }*/
 
 bool acendeLampada(int* tempoPercorrido, int* tempoIdeal, float* LDRVoltage, float*ThrVoltage){
 	bool retorno;
@@ -33,38 +29,15 @@ void LDRVoltageUpdt(float* LDRVoltage){
 /*
  * Enable pullup on unused pins
  */
-void PowerDown(){
+void PowerDown(int time){
     //Serial.println("Going to sleep...");
-    Serial.end();
-    /* 
-     * Power Reduction Register
-     * Disable I2C, Timer 2, Timer 1, SPI, USART and ADC
-     * See how to reinitialize USART
-     */
-    noInterrupts();
-    PRR = (1 << PRTWI0) | (1 << PRTIM2) | (1 << PRTIM1) | (1 << PRTIM0) | (1 << PRSPI0) | (0 << PRUSART0) | (1 << PRADC);
-    interrupts();
-    /*
-     * Sleep Mode Control Register
-     * Set Power Down Mode
-     * SE = Sleep Enable 
-     * After wake up, program re-starts after __asm__
-     */
-    SMCR = (0 << SM2) | (1 << SM1) | (0 << SM0);
-    SMCR |= 1 << SE;
-    __asm__ __volatile__ ( "sleep" "\n\t" :: );
-    SMCR &= ~(1 << SE);
-    noInterrupts();
-    PRR &= ~0x01;
-    interrupts();
-    Serial.begin(115200);
-    //Serial.println("\nWaking up...");
+    delay(time);
     }
 
     //(*localTime).ano é igual a localTime->ano
 //31557600=365.25 dias no ano.  31536000=365*24*3600.    31622400=366*24*3600
 
-void updateData(bool* lampState){
+/*void updateData(bool* lampState){
     String inputBuffer;
     String outputBuffer = "";
     int i = 0;
@@ -147,7 +120,7 @@ void updateData(bool* lampState){
     }
 
     return;
-}
+}*/
 
 void utcToTime(tm *localTime, unsigned long* utc){
 
