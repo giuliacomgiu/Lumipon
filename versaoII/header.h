@@ -20,26 +20,6 @@
 #define SEC_INCR_AND_UPDT_LDR B10
 #define SEC_INCR_AND_UPDT_DATA_AND_LDR B11
 #define UPDT_RATE 1
-#define UPDT_LDR 2
-#define KEEP_LCD 30
-
-#define PRTWI0 7
-#define PRTIM2 6
-#define PRTIM0 5
-#define PRTIM1 3
-#define PRSPI0 2
-#define PRUSART0 1
-#define PRADC 0
-#define WDP3 5
-#define WDP2 2
-#define WDP1 1
-#define WDP0 0
-
-//#define CA22 2
-//#define CA21 1
-//#define CA20 0
-
-//#define OCIEA 1
 
 typedef struct {
     byte seg;
